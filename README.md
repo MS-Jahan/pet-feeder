@@ -1,3 +1,4 @@
+[This project is forked from my another GitHub account for showcase purposes]
 # Pet Feeder Web Application
 
 This project is a web-based pet feeder application that allows users to schedule feeding times and manually dispense food. It consists of a backend server, a frontend web interface, and an ESP8266-based hardware component for controlling the pet feeder.
