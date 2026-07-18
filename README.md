@@ -1,77 +1,79 @@
-[This project is forked from my another GitHub account for showcase purposes]
 # Pet Feeder Web Application
 
-This project is a web-based pet feeder application that allows users to schedule feeding times and manually dispense food. It consists of a backend server, a frontend web interface, and an ESP8266-based hardware component for controlling the pet feeder.
+> Forked from my other GitHub account for showcase on this profile.
+
+Full-stack IoT pet feeder: schedule or manually dispense food via a Flask + MQTT backend, browser UI, and ESP8266 firmware.
+
+<!-- screenshot: docs/screenshots/hero.png -->
+
+## Overview
+
+Users log in, manage feeding schedules, and trigger an immediate dispense. The Flask API talks to an MQTT broker; ESP8266 firmware listens and drives the feeder hardware. The ESP8266 can also run in AP mode for Wi-Fi setup.
+
+## Links
+
+- **Repo:** https://github.com/MS-Jahan/pet-feeder
+- **Live demo:** self-hosted only (no public URL) — run Flask locally and point the ESP8266 at your MQTT broker
+
+## Key Features
+
+- User authentication
+- CRUD feeding schedules
+- Manual “Dispense” control
+- MQTT realtime device control
+- ESP8266 Wi-Fi configuration (AP mode)
+
+## Tech Stack
+
+| Layer | Stack |
+| :--- | :--- |
+| Backend | Python, Flask, Flask-CORS, Paho-MQTT, SQLite |
+| Frontend | HTML/CSS/JS, Materialize CSS, SweetAlert2 |
+| Firmware | C++ / Arduino on ESP8266 (`esp_pet_dispense.ino`) |
+
+## Dependencies
+
+Backend (`backend/requirements.txt`):
+
+- `Flask`, `Flask-Cors`, `paho-mqtt`, `pytz`, `requests`
+
+```bash
+cd backend
+pip install -r requirements.txt
+```
+
+Firmware: Arduino IDE + ESP8266 core + MQTT client library matching your sketch includes.
 
 ## Components
 
-1.  Backend (Python/Flask)
-2.  Frontend (HTML/CSS/JavaScript)
-3.  ESP8266 Firmware (C++)
+1. **Backend** (`backend/`) — auth, schedule CRUD, MQTT publish, SQLite
+2. **Frontend** (`frontend/`) — login + main app pages
+3. **ESP8266** (`esp_pet_dispense.ino`) — Wi-Fi, MQTT subscribe, hardware control
 
-## Features
+## How to Run Locally
 
--   User authentication
--   Schedule feeding times
--   Manual food dispensing
--   MQTT communication for real-time control
--   WiFi configuration for the ESP8266 module
+1. Install backend deps (above).
+2. Start the Flask app (creates SQLite DB on first run):
 
-## Backend (main.py)
+```bash
+cd backend
+python main.py
+```
 
-The backend is built with Flask and provides the following functionality:
+3. Flash `esp_pet_dispense.ino` to the ESP8266; configure Wi-Fi (AP mode) and MQTT broker host/credentials in firmware + backend.
+4. Open the frontend in a browser (serve `frontend/` or open the HTML as your setup requires).
 
--   User authentication
--   CRUD operations for feeding schedules
--   MQTT communication to control the pet feeder
--   SQLite database for storing user data and feeding schedules
+### Usage
 
-## Frontend
-
-The frontend consists of two main pages:
-
-1.  Login page (login/index.html)
-2.  Main application page (index.html)
-
-The frontend uses Materialize CSS for styling and SweetAlert2 for user-friendly notifications.
-
-## ESP8266 Firmware (esp_pet_dispense.ino)
-
-The ESP8266 firmware handles:
-
--   WiFi connection and configuration
--   MQTT communication with the server
--   Control of the pet feeder hardware
-
-## Setup and Installation
-
-1.  Set up the Python environment and install required packages:
-    
-    Copy
-    
-    `pip install flask flask_cors paho-mqtt pytz`
-    
-2.  Set up the SQLite database by running the backend for the first time.
-3.  Upload the ESP8266 firmware to your device.
-4.  Configure the WiFi credentials for the ESP8266 using the AP mode.
-5.  Update the MQTT broker address and credentials in both the backend and ESP8266 firmware.
-6.  Run the Flask server:
-    
-    Copy
-    
-    `python main.py`
-    
-7.  Access the web application through a browser.
-
-## Usage
-
-1.  Log in using your user ID and password.
-2.  Add feeding times using the time picker.
-3.  Edit or delete existing feeding times as needed.
-4.  Use the "Dispense" button for manual food dispensing.
+1. Log in with your user ID and password.
+2. Add / edit / delete feeding times.
+3. Use **Dispense** for a manual feed.
 
 ## Security Notes
 
--   Ensure to use secure passwords and API keys.
--   The current implementation stores passwords in plain text. For production use, implement proper password hashing.
--   Consider using HTTPS for the web server and encrypted MQTT communication.
+- Passwords are stored in plain text in the current implementation — hash them before any real deployment.
+- Use strong credentials, HTTPS, and encrypted MQTT in production.
+
+## License
+
+See repository license / upstream fork terms.
