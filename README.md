@@ -4,7 +4,7 @@
 
 Full-stack IoT pet feeder: schedule or manually dispense food via a Flask + MQTT backend, browser UI, and ESP8266 firmware.
 
-<!-- screenshot: docs/screenshots/hero.png -->
+![Project overview](docs/screenshots/hero.png)
 
 ## Overview
 
